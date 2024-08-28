@@ -62,7 +62,7 @@ products.forEach((product) => {
 });
 document.querySelector(".js-products-grid").innerHTML = productsHTML;
 
-function updateCartQuantity() {
+function updateCartQuantity(productId) {
   document.querySelector(".js-cart-quantity").innerHTML =
     calculateCartQuantity();
 
@@ -78,6 +78,7 @@ function updateCartQuantity() {
   }, 2000);
   addedMessageTimeouts[productId] = timeoutId;
 }
+
 const addedMessageTimeouts = {};
 document.querySelectorAll(".js-add-to-cart").forEach((button) => {
   button.addEventListener("click", () => {
@@ -86,6 +87,6 @@ document.querySelectorAll(".js-add-to-cart").forEach((button) => {
     } = button;
 
     addToCart(productId);
-    updateCartQuantity();
+    updateCartQuantity(productId);
   });
 });
