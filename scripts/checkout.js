@@ -53,7 +53,7 @@ cart.forEach((cartItem) => {
               js-update-link" data-product-id=${matchingProduct.id}>
               Update 
               </span>
-              <input class="quantity-input js-quantity-input-${
+              <input class="quantity-input js-quantity-input" data-product-id="${
                 matchingProduct.id
               }">
               <span class="save-quantity-link link-primary js-save-link" data-product-id="${
@@ -160,5 +160,29 @@ document.querySelectorAll(".js-save-link").forEach((link) => {
     document.querySelector(`.js-quantity-label-${productId}`).innerHTML =
       newQuantity;
     updateCartQuantity(productId);
+  });
+});
+
+document.querySelectorAll(".js-quantity-input").forEach((input) => {
+  input.addEventListener("keypress", (event) => {
+    if (event.key === "Enter") {
+      const productId = input.dataset.productId;
+      const newQuantity = Number(input.value);
+
+      if (newQuantity < 0 || newQuantity > 1000) {
+        alert("Quantity must be at least 0 and less than 1000");
+        return;
+      }
+
+      updateQuantity(productId, newQuantity);
+      const container = document.querySelector(
+        `.js-cart-item-container-${productId}`
+      );
+      container.classList.remove("is-editing-quantity");
+
+      document.querySelector(`.js-quantity-label-${productId}`).innerHTML =
+        newQuantity;
+      updateCartQuantity(productId);
+    }
   });
 });
